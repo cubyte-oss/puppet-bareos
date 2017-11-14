@@ -3,6 +3,7 @@ define bareos::director::fileset (
     $options         = {},
     $includes        = [],
     $include_options = {},
+    $include_plugins = [],
     $excludes        = [],
     $exclude_options = {},
     $conf_includes   = [],

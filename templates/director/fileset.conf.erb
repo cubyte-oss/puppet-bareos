@@ -49,6 +49,9 @@ FileSet {
     <%- else -%>
     File = "<%= @excludes %>"
     <%- end -%>
+    <%- @include_plugins.each do |plugin| -%>
+    Plugin = "<%= plugin %>"
+    <%- end -%>
   }
   <%- end -%>
   <%- @conf_includes.each do |include| -%>
