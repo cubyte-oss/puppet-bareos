@@ -3,7 +3,7 @@ FileSet {
   <%- @options.each do |(name, value)| -%>
   <%= name %> = <%= value %>
   <%- end -%>
-  <%- unless @includes.empty? -%>
+  <%- unless @includes.empty? and @include_plugins.empty? -%>
   Include {
     <%- unless @include_options.empty? -%>
     Options {
@@ -24,6 +24,9 @@ FileSet {
     <%- end -%>
     <%- else -%>
     File = "<%= @includes %>"
+    <%- end -%>
+    <%- @include_plugins.each do |plugin| -%>
+    Plugin = "<%= plugin %>"
     <%- end -%>
   }
   <%- end -%>
@@ -48,9 +51,6 @@ FileSet {
     <%- end -%>
     <%- else -%>
     File = "<%= @excludes %>"
-    <%- end -%>
-    <%- @include_plugins.each do |plugin| -%>
-    Plugin = "<%= plugin %>"
     <%- end -%>
   }
   <%- end -%>
