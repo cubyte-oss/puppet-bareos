@@ -20,10 +20,11 @@ class bareos::repo (
             'Debian': {
             
                 # puppetlabs-apt 2.x is not able to specify an empty release, so directly create the apt::setting resource here
-            
+                $os = $facts['os']['distro']['id']
+                $os_major = $facts['os']['distro']['release']['major']
                 $setting      = "list-${bareos::global::repo_name}"
                 $_include     = {'deb' => true}
-                $location     = "${bareos_repo_base}/${repo_path}/${::operatingsystem}_${::operatingsystemmajrelease}.0"
+                $location     = "${bareos_repo_base}/${repo_path}/${os}_${os_major}.0"
                 $repos        = '/'
                 $comment      = $bareos::global::repo_name
                 $architecture = false
