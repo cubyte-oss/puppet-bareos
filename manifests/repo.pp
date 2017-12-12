@@ -35,7 +35,7 @@ class bareos::repo (
             
                 ::apt::setting {$setting:
                     ensure  => present,
-                    content => template('apt/_header.erb', 'apt/source.list.erb'),
+                    content => "# Managed by puppet\n" + template('apt/source.list.erb'),
                 }
 
                 ->
