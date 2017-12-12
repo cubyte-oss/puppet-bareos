@@ -8,25 +8,20 @@ class bareos::repo::contrib {
         case $::osfamily {
             'Debian': {
 
-                # puppetlabs-apt 2.x is not able to specify an empty release, so directly create the apt::setting resource here
-
-                $setting      = "list-${bareos::global::contrib_repo_name}"
-                $_include     = {'deb' => true}
                 $location     = "${bareos_repo_base}/${repo_path}/${::operatingsystem}_${::operatingsystemmajrelease}.0"
-                $repos        = '/'
-                $comment      = $bareos::global::contrib_repo_name
-                $architecture = false
-                
-                ::apt::key {'0143857D9CE8C2D182FE2631F93C028C093BFBA2':}
-                
-                ->
-            
-                ::apt::setting {$setting:
-                    ensure  => present,
-                    content => template('apt/_header.erb', 'apt/source.list.erb'),
+
+                apt::source {$bareos::global::contrib_repo_name:
+                    location => $location,
+                    release  => '',
+                    repos    => '/',
+                    key      => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
+                    include  => {
+                        deb  => true,
+                        src  => false,
+                    },
                 }
                 
-                $require = Apt::Setting[$setting]
+                $require = Apt::Source[$bareos::global::contrib_repo_name]
             }
         }
         
