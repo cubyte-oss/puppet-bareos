@@ -28,24 +28,20 @@ class bareos::repo (
                 $repos        = '/'
                 $comment      = $bareos::global::repo_name
                 $architecture = false
-                
-                ::apt::key {'0143857D9CE8C2D182FE2631F93C028C093BFBA2':}
-                
-                ->
-            
-                ::apt::setting {$setting:
-                    ensure  => present,
-                    content => "# Managed by puppet\n" + template('apt/source.list.erb'),
-                }
 
-                ->
-
-                ::apt::pin {$bareos::global::repo_name:
-                    priority => 1000,
-                    origin   => $bareos_repo_host,
+                apt::source {$bareos::global::repo_name:
+                    location => $location,
+                    release  => '',
+                    repos    => '/',
+                    key      => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
+                    pin      =>  1000,
+                    include  => {
+                        dep  => true,
+                        src  => false,
+                    },
                 }
                 
-                $require = Apt::Setting[$setting]
+                $require = Apt::Source[$bareos::global::repo_name]
             }
         }
         
