@@ -7,7 +7,7 @@ FileDaemon {
   Plugin Directory = "<%= @plugins_dir %>"
   <%- if @plugins.kind_of?(Array) -%>
   Plugin Names = "<%= @plugins.join(' ') %>"
-  <%- end %>
+  <%- end -%>
   <%- @options.each do |(name, value)| -%>
   <%= name %> = <%= value %>
   <%- end -%>
