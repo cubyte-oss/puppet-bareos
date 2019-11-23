@@ -19,10 +19,16 @@ class bareos::repo (
     
         case $::osfamily {
             'Debian': {
-            
                 $os       = $facts['os']['distro']['id']
                 $os_major = $facts['os']['distro']['release']['major']
-                $location = "${bareos_repo_base}/${repo_path}/${os}_${os_major}.0"
+
+                if $os_major < 10 {
+                    $ver = "${os_major}.0"
+                } else {
+                    $ver = $os_major
+                }
+
+                $location = "${bareos_repo_base}/${repo_path}/${os}_${ver}"
 
                 apt::source {$bareos::global::repo_name:
                     location => $location,
@@ -35,7 +41,7 @@ class bareos::repo (
                         src  => false,
                     },
                 }
-                
+
                 $require = Apt::Source[$bareos::global::repo_name]
             }
         }
