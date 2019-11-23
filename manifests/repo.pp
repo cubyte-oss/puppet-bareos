@@ -22,7 +22,7 @@ class bareos::repo (
                 $os       = $facts['os']['distro']['id']
                 $os_major = $facts['os']['distro']['release']['major']
 
-                if $os_major < 10 {
+                if $os_major.scanf('%d')[0] < 10 {
                     $ver = "${os_major}.0"
                 } else {
                     $ver = $os_major
