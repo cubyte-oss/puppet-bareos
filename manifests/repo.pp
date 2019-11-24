@@ -36,7 +36,7 @@ class bareos::repo (
                     release    => '',
                     repos      => '/',
                     key        => {
-                        #id     => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
+                        id     => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
                         source => $key_location,
                     pin        =>  $pin,
                     include    => {
