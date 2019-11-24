@@ -8,8 +8,10 @@ class bareos::repo (
             
     if $version == 'nightly' {
         $repo_path = 'experimental/nightly'
+        $repo_key  = '82834CF002D89BA55C1ED0AA42DA24A6DFEF9127'
     } else {
         $repo_path = "release/${version}"
+        $repo_key  = '0143857D9CE8C2D182FE2631F93C028C093BFBA2'
     }
     
     $bareos_repo_host = 'download.bareos.org'
@@ -36,7 +38,7 @@ class bareos::repo (
                     release    => '',
                     repos      => '/',
                     key        => {
-                        id     => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
+                        id     => $repo_key,
                         source => $key_location,
                     },
                     pin        =>  $pin,
