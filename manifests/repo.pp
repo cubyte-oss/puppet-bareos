@@ -29,16 +29,19 @@ class bareos::repo (
                 }
 
                 $location = "${bareos_repo_base}/${repo_path}/${os}_${ver}"
+                $key_location = "${location}/Release.key"
 
                 apt::source {$bareos::global::repo_name:
-                    location => $location,
-                    release  => '',
-                    repos    => '/',
-                    key      => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
-                    pin      =>  $pin,
-                    include  => {
-                        deb  => true,
-                        src  => false,
+                    location   => $location,
+                    release    => '',
+                    repos      => '/',
+                    key        => {
+                        #id     => '0143857D9CE8C2D182FE2631F93C028C093BFBA2',
+                        source => $key_location,
+                    pin        =>  $pin,
+                    include    => {
+                        deb    => true,
+                        src    => false,
                     },
                 }
 
