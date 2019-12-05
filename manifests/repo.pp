@@ -35,6 +35,9 @@ class bareos::repo (
                     '17.2': {
                         $repo_key = '0143857D9CE8C2D182FE2631F93C028C093BFBA2'
                     }
+                    default: {
+                        fail("unsupported bareos version ${version}")
+                    }
                 }
             }
 
