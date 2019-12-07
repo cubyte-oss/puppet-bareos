@@ -1,26 +1,24 @@
 
 class bareos::repo (
-    $version = 'latest',
-    $pin     = undef,
+    $version        = 'latest',
+    $pin            = undef,
+    $distro         = $facts['os']['distro']['id'],
+    $distro_version = $facts['os']['distro']['release']['major'],
 ) {
 
     include bareos::global
-
     
     $bareos_repo_host = 'download.bareos.org'
     $bareos_repo_base = "http://${bareos_repo_host}/bareos"
 
-    case $facts['os']['name'] {
+    case $distro {
         'Debian': {
-            $os       = $facts['os']['distro']['id']
-            $os_major = $facts['os']['distro']['release']['major']
-
-            if versioncmp($os_major, '8') < 0 {
-                fail("Unsupported Debian version: ${facts['os']['name']}")
-            } elsif versioncmp($os_major, '10') < 0 {
-                $ver = "${os_major}.0"
+            if versioncmp($distro_version, '8') < 0 {
+                fail("Unsupported Debian version: ${distro}")
+            } elsif versioncmp($distro_version, '10') < 0 {
+                $ver = "${distro_version}.0"
             } else {
-                $ver = $os_major
+                $ver = $distro_version
             }
 
             if $version == 'nightly' {
@@ -41,7 +39,7 @@ class bareos::repo (
                 }
             }
 
-            $location = "${bareos_repo_base}/${repo_path}/${os}_${ver}"
+            $location = "${bareos_repo_base}/${repo_path}/${distro}_${ver}"
             $key_location = "${location}/Release.key"
 
             if $bareos::global::repo_manage {
