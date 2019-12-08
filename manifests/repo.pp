@@ -2,7 +2,7 @@
 class bareos::repo (
     $version        = 'latest',
     $pin            = undef,
-    $distro         = $facts['os']['distro']['id'],
+    $distro         = $facts['os']['name'],
     $distro_version = $facts['os']['distro']['release']['major'],
 ) {
 
@@ -64,7 +64,7 @@ class bareos::repo (
             }
         }
         default: {
-            fail("Unsupported OS: ${facts['os']['name']}")
+            fail("Unsupported OS: ${distro}")
         }
     }
 }
