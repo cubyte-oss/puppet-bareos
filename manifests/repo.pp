@@ -30,11 +30,11 @@ class bareos::repo (
                 case $version {
                     /(latest|18.2)/: {
                         $repo_key = 'A0CFE15F71F798574AB363DD118283D9A7862CEE'
-                        $unsigned = false,
+                        $unsigned = false
                     }
                     '17.2': {
                         $repo_key = '0143857D9CE8C2D182FE2631F93C028C093BFBA2'
-                        $unsigned = true,
+                        $unsigned = true
                     }
                     default: {
                         fail("unsupported bareos version ${version}")
