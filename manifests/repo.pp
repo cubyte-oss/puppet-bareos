@@ -24,14 +24,17 @@ class bareos::repo (
             if $version == 'nightly' {
                 $repo_path = 'experimental/nightly'
                 $repo_key  = '82834CF002D89BA55C1ED0AA42DA24A6DFEF9127'
+                $unsigned  = false
             } else {
-                    $repo_path = "release/${version}"
+                $repo_path = "release/${version}"
                 case $version {
                     /(latest|18.2)/: {
                         $repo_key = 'A0CFE15F71F798574AB363DD118283D9A7862CEE'
+                        $unsigned = false,
                     }
                     '17.2': {
                         $repo_key = '0143857D9CE8C2D182FE2631F93C028C093BFBA2'
+                        $unsigned = true,
                     }
                     default: {
                         fail("unsupported bareos version ${version}")
@@ -44,18 +47,19 @@ class bareos::repo (
 
             if $bareos::global::repo_manage {
                 apt::source {$bareos::global::repo_name:
-                    location   => $location,
-                    release    => '',
-                    repos      => '/',
-                    key        => {
+                    location       => $location,
+                    release        => '',
+                    repos          => '/',
+                    key            => {
                         id     => $repo_key,
                         source => $key_location,
                     },
-                    pin        =>  $pin,
-                    include    => {
-                        deb    => true,
-                        src    => false,
+                    pin            => $pin,
+                    include        => {
+                        deb => true,
+                        src => false,
                     },
+                    allow_unsigned => $unsigned,
                 }
 
                 $require = Apt::Source[$bareos::global::repo_name]
