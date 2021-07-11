@@ -3,7 +3,7 @@ class bareos::repo::contrib {
 
     include bareos::global
 
-    if $global::repo_manage {
+    if $bareos::global::repo_manage {
 
         case $::osfamily {
             'Debian': {
